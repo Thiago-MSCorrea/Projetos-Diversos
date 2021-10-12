@@ -1,13 +1,13 @@
 import PySimpleGUI as sg
-import Produtos as P
+import json 
 
+with open("Produtos.json",'r') as produtosJson:
+    produtos = json.load(produtosJson)
 
 class JanelaCaixa():
     def __init__(self):
         self.ptotal = 0.0
-        self.qtd = 0
-        self.produtos = P.produtos
-  
+        self.qtd = 0   
         layout = [[sg.Text('Nome do item:'),sg.InputText(key='Ent'),sg.Text('Quantidade:'), sg.Input(key='qtd')],
                 [sg.Output(size=(150,30),background_color='lightgray'), sg.Button('Adicionar Item')],
                 [sg.Text('Fechar sistema?'), sg.Button('Sim',key='S')]]
@@ -28,9 +28,9 @@ class JanelaCaixa():
 
     def adicionar_item(self,valores):
         try:
-            if valores['Ent'] in self.produtos:
-                self.ptotal += self.produtos[valores['Ent']] * int(valores['qtd'])
-            if valores['Ent'] not in self.produtos:
+            if valores['Ent'] in produtos:
+                self.ptotal += produtos[valores['Ent']] * int(valores['qtd'])
+            if valores['Ent'] not in produtos:
                 raise KeyError
         except KeyError:
             self.imprime_erro1()
