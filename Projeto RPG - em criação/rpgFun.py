@@ -4,13 +4,10 @@ import sqlite3 as bd
  
 engine = bd.connect('rpg.db')
 r = engine.cursor()
-ids = [x*2 + 1 for x in range(70)]
 
 class Jogador():
     def __init__(self,nome,experiencia=23):
-        self.aleatorio = randint(0,69)
         self.nome = nome
-        self.id = ids[self.aleatorio]
         self.vivo = True
         self.heroi = None
         self.experiencia = experiencia
@@ -32,7 +29,7 @@ class Inimigo(Heroi):
 
 
 def getNomeHeroi():
-    heroi = randint(1,10)
+    heroi = int(input("Digite o ID do Herói: "))
     sql = "SELECT NOME FROM HEROI WHERE ID = ?" 
     query = r.execute(sql,(heroi,))
     heroi = query.fetchone()
@@ -100,19 +97,10 @@ def escolheHabilidade(jogador):
 
 
 
-print("IDs: ")
-print(ids)
 jogador1 = Jogador("Thiago")
 jogador2 = Jogador("David")
 jogador3 = Jogador("Vinicius")
 
-print("TESTE REGISTRO RPG:")
-print("jogador 1:")
-print("id ",jogador1.id,"nome: " ,jogador1.nome)
-print("jogador 2:")
-print("id ",jogador2.id,"nome: " ,jogador2.nome)
-print("jogador 3:")
-print("id ",jogador3.id,"nome: " ,jogador3.nome)
 print('TESTE ASSOCIACAO DE HEROIS')
 defineHeroi(jogador1)
 defineHeroi(jogador2)
